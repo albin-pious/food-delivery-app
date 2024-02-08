@@ -5,15 +5,15 @@ import { RESTRO_MENU_API } from "../utils/constants";
 
 const ResturantMenu = ()=>{
     const [resMenu,setResMenu]=useState(null);
-    const { resId }= useParams();
-    console.log('params is: ',resId);
+    const {id} = useParams();
+    console.log('params is: ',id);
     useEffect(()=>
     {   
         fetchMenu();
     },[]);
 
     const fetchMenu = async()=>{
-        const data = await fetch(RESTRO_MENU_API+resId);
+        const data = await fetch(RESTRO_MENU_API+id);
         const json = await data.json();
         console.log(json);
         setResMenu(json)
