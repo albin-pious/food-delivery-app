@@ -1,42 +1,24 @@
-import { useEffect,useState } from "react";
 import { useParams } from 'react-router-dom';
 import ShimmerUI from "./ShimmerUI";
-import { RESTRO_MENU_API } from "../utils/constants";
-
-const ResturantMenu = ()=>{
-    const [resMenu,setResMenu]=useState(null);
-    const {id} = useParams();
-    console.log('params is: ',id);
-    useEffect(()=>
-    {   
-        fetchMenu();
-    },[]);
-
-    const fetchMenu = async()=>{
-        const data = await fetch(RESTRO_MENU_API+id);
-        const json = await data.json();
-        console.log(json);
-        setResMenu(json)
-    }
+import useResturantMenu  from '../utils/useResturantMenu'
      
-    // console.log('data console is',resMenu?.data?.cards[5].groupedCard.cardGroupMap.REGULAR.cards[2].card.card.itemCards)
-
+const ResturantMent = ()=>{
+    const {id} = useParams();
+    const resMenu = useResturantMenu(id);
     if(resMenu === null){
        return <ShimmerUI />
     }
-    let {itemCards} = resMenu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card
-    let {title} = resMenu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card
-
-    console.log(`title is ${title} and the array of menu is ${resMenu}`);
-
+    console.log('data console is',resMenu?.data.cards[5]?.groupedCard?.cardGroupMap?.REGULAR);
+    let {cards} = resMenu?.data?.cards[5]?.groupedCard;
+    let {name} = resMenu?.data?.cards[2].card.card.info;
 
     return(
         <div>
-            <h1>{title}</h1>
-            {console.log('data console is',resMenu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards)}
+            <h1>{name}</h1>
+            {console.log('data console is',resMenu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR)}
             <h4>Menu:</h4>
             <ul>
-                {itemCards.map(menu=>{
+                {cards.map(menu=>{
                    return <li key={menu.card.info.id}>{menu.card.info.name} - Rs.{menu.card.info.price/100}</li>
                 })}
             </ul>
@@ -44,4 +26,4 @@ const ResturantMenu = ()=>{
     )
 }
 
-export default ResturantMenu;
+export default ResturantMent;
