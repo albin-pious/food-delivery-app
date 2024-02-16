@@ -8,17 +8,15 @@ const ResturantMent = ()=>{
     if(resMenu === null){
        return <ShimmerUI />
     }
-    console.log('data console is',resMenu?.data.cards[5]?.groupedCard?.cardGroupMap?.REGULAR);
-    let {cards} = resMenu?.data?.cards[5]?.groupedCard;
-    let {name} = resMenu?.data?.cards[2].card.card.info;
+    let {itemCards} = resMenu?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
+    let {text} = resMenu?.cards[0]?.card?.card;
 
     return(
         <div>
-            <h1>{name}</h1>
-            {console.log('data console is',resMenu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR)}
+            <h1>{text}</h1>
             <h4>Menu:</h4>
             <ul>
-                {cards.map(menu=>{
+                {itemCards.map(menu=>{
                    return <li key={menu.card.info.id}>{menu.card.info.name} - Rs.{menu.card.info.price/100}</li>
                 })}
             </ul>
