@@ -2,18 +2,20 @@ import { useEffect, useState } from "react";
 import RestroCard from "./RestroCard";
 import ShimmerUI from "./ShimmerUI";
 import {Link} from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = ()=>{
     const [listOfResturant,setResList] = useState([]);
     const [filteredListOfResturant,setFilteredListOfResturant] = useState([]);
     const [searchText,setSearchText] = useState('');
+    const internetStatus = useOnlineStatus();
 
     useEffect(()=>{
         fetchData()
     },[]);
 
     async function fetchData(){
-        const data = await fetch("https://www.swiggy.com/mapi/homepage/getCards?lat=12.9199543&lng=77.6256895");
+        const data = await fetch("https://www.swiggy.com/mapi/homepage/getCards?lat=12.9046136&lng=77.614948");
         const json = await data.json();
         setResList(json?.data?.success?.cards[4]?.gridWidget?.gridElements?.infoWithStyle?.restaurants);
         setFilteredListOfResturant(json?.data?.success?.cards[4]?.gridWidget?.gridElements?.infoWithStyle?.restaurants)
@@ -42,7 +44,11 @@ const Body = ()=>{
             </div>
         )
     }
-    console.log(listOfResturant)
+    console.log('online status is ',internetStatus);
+    if(internetStatus === false){
+        return <h1>Please check your Internet...</h1>
+    }
+
     return(
         <div className="body">
             <div className="filter">
