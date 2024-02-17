@@ -44,7 +44,6 @@ const Body = ()=>{
             </div>
         )
     }
-    console.log('online status is ',internetStatus);
     if(internetStatus === false){
         return <h1>Please check your Internet...</h1>
     }

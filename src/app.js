@@ -1,4 +1,4 @@
-import React from "react";
+import React,{lazy,Suspense} from "react";
 import ReactDOM  from "react-dom/client";
 import {createBrowserRouter,RouterProvider,Outlet} from "react-router-dom";
 import '../style.css'
@@ -9,8 +9,9 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import ResturantMenu from "./components/ResturantMent";
+import Grocery from "./components/Grocery";
 
-
+const Grocery = lazy(()=>import("./components/Grocery"));
 const App = ()=>{
     return(
         <div className="app">
@@ -44,6 +45,11 @@ const appRouter = createBrowserRouter([
             {
                 path: '/resturants/:id',
                 element: < ResturantMenu />,
+                errorElement: <Error />
+            },
+            {
+                path: '/grocery',
+                element: <Suspense><Grocery /></Suspense>,
                 errorElement: <Error />
             },
         ],
